@@ -1,0 +1,5 @@
+package com.socr.user.model;
+
+public class Category {
+
+}

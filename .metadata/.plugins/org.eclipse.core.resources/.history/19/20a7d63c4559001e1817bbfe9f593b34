@@ -1,0 +1,14 @@
+package com.blog.exception.service.impl;
+
+import javax.validation.Valid;
+
+import com.blog.payloads.UserDto;
+
+public class UserServiceImpl {
+
+	public UserDto createUser(@Valid UserDto userDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

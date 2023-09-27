@@ -1,0 +1,5 @@
+package com.socr.service.impl;
+
+public class CategoryServiceImpl {
+
+}

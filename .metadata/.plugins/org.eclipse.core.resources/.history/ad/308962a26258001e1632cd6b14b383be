@@ -1,0 +1,117 @@
+package com.email.scheduler.controller;
+
+import java.util.List;
+
+import org.quartz.CronScheduleBuilder;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.email.scheduler.payload.ScheduleDetails;
+import com.email.scheduler.service.SchedulingService;
+
+@RestController
+@RequestMapping("/cron")
+public class EmailCronController {
+	
+	@Autowired
+	private Scheduler scheduler;
+	
+	 @Autowired
+	    private SchedulingService schedulingService;
+	 
+	 
+	 
+	// this is scheduler method
+		 @PostMapping("info1")
+		    public ResponseEntity<String> sendInfo(@RequestBody ScheduleDetails detail) {
+		        try {
+		            schedulingService.sendInfo1(detail);
+		            return ResponseEntity.ok("Job scheduled successfully");
+		        } catch (Exception e) {
+		            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error scheduling job");
+		        }
+		    }
+	 
+	 
+		 @PostMapping("/info2")
+		    public ResponseEntity<String> sendInfo2(@RequestBody ScheduleDetails detail) {
+		        try {
+		            schedulingService.sendInfo2(detail);
+		            
+		            return ResponseEntity.ok("Job scheduled successfully");
+		        } catch (Exception e) {
+		            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error scheduling job");
+		        }
+		    }
+	 
+	 
+	 
+		//pause a job by its key
+		 @PostMapping("/pause")
+		    public void pauseJob(String jobName, String jobGroup) throws SchedulerException {
+			 schedulingService.pauseJob(jobName, jobGroup);
+		 
+		 }
+	
+	
+//		 public void updateTrigger() {
+//			 Trigger newTrigger = TriggerBuilder.newTrigger()
+//			    	    .withIdentity("newTriggerName", "newTriggerGroup")
+//			    	    .withSchedule(CronScheduleBuilder.cronSchedule("0 0 12 * * ?")) // New Cron expression
+//			    	    .forJob("existingJobName", "existingJobGroup") // Specify the job to associate the trigger with
+//			    	    .build();
+//
+//			    	scheduler.rescheduleJob(existingTriggerKey, newTrigger);
+//
+//		 }
+		 
+		 
+		 
+		 
+		 
+    @PostMapping("/")
+	 public ScheduleDetails saveCronDetail(@RequestBody ScheduleDetails details){
+		               return schedulingService. saveCronDetail (details);
+	 }
+	
+	
+	 @GetMapping("/schedule/{scheduleId}")
+	    public ResponseEntity<String> scheduleJob(@PathVariable Long scheduleId) {
+	        try {
+	            schedulingService.scheduleJob(scheduleId);
+	            return ResponseEntity.ok("Job scheduled successfully");
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error scheduling job");
+	        }
+	    }
+	 
+	 
+	 
+	 
+	 @GetMapping("/get")
+	 public  List<ScheduleDetails> getAllCronData(){
+		 return schedulingService.getAllCronData();
+		 
+	 }
+	 
+	 @PutMapping("/update/{id}")
+	 public  ScheduleDetails updateCronExpression(@RequestBody ScheduleDetails detail, @PathVariable Long id) {
+		  return schedulingService.updateCronExpression(detail, id);
+	 }
+	
+
+}

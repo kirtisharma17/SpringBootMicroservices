@@ -1,0 +1,5 @@
+package com.blog.exception.service.impl;
+
+public class UserServiceImpl {
+
+}

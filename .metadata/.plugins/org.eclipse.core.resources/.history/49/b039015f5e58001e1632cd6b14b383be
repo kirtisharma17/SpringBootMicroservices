@@ -1,0 +1,20 @@
+package com.email.scheduler;
+
+import org.junit.jupiter.api.Test;
+import org.quartz.Scheduler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class EmailSchedulerApplicationTests {
+	
+	@Autowired
+	private Scheduler scheduler;
+
+	@Test
+	void contextLoads() {
+		
+		System.out.println(scheduler.getClass().getName());
+	}
+
+}

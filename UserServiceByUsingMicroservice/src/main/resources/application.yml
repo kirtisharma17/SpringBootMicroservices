@@ -1,0 +1,73 @@
+server:
+  port: 8081
+  
+Spring:
+  application:
+       name:   User-Service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/microservice 
+    userName: postgres
+    password: admin@123  
+    
+  jpa:
+    hibernate:
+       ddl-auto: update
+    show-sql: true
+    
+  config:
+     import:  configserver:http://localhost:8085   
+ 
+#eureka:
+#   instance:
+#      prefer-ip-address: true
+#   client:
+#      fetch-registry: true
+#      register-with-eureka: true
+#      service-url:
+#         defaultZone: http://localhost:8761/eureka
+#     
+#    spring.application.name=User-Service
+#         spring.config.import = configserver:http://localhost:8085 
+
+
+management:
+   health:
+      circuitbreakers:
+              enabled:  true
+   endpoints:
+         web:
+          exposure: 
+            include: health    
+         
+   endpoint:
+         health:
+             show-details: always
+
+
+resilience4j:
+  circuitbreaker:
+    instances:
+       ratingHotelBreaker:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        waitDurationInOpenState: 5s
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+  retry:
+    instances:
+      ratingHotelService:
+        max-attempts: 3
+        wait-duration: 500ms
+#        retryExceptions:
+#          - java.io.IOException
+#  ratelimiter:
+#    instances:
+#      UserRateLimiter:
+#        
+#        limit-refresh-period: 4s
+#        limit-for-period: 2
+#        timeout-duration: 0s

@@ -1,0 +1,245 @@
+package com.email.scheduler.service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.quartz.CronExpression;
+import org.quartz.CronScheduleBuilder;
+import org.quartz.CronTrigger;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.JobKey;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+import org.springframework.stereotype.Service;
+
+import com.email.scheduler.payload.ScheduleDetails;
+import com.email.scheduler.quartz.job.EmailJob1;
+import com.email.scheduler.quartz.job.EmailJob2;
+import com.email.scheduler.repo.ScheduleDetailsRepo;
+
+@Service
+public class SchedulingService {
+	
+	 @Autowired
+	  private ScheduleDetailsRepo scheduleDetailsRepository;
+
+	    @Autowired
+	    private SchedulerFactoryBean schedulerFactoryBean;
+	    
+	    
+	    
+	    
+	    public void sendInfo1(ScheduleDetails detail) {
+		      
+            try {
+	                // Validate the cron expression
+	                if (!CronExpression.isValidExpression(detail.getCronExpression())) {
+	                    throw new IllegalArgumentException("Invalid cron expression");
+	                }
+
+	                // Create a new job detail
+	                JobDetail jobDetail = JobBuilder.newJob(EmailJob1.class)
+	                		.withIdentity(UUID.randomUUID().toString(), "email-job1")
+	        				.withDescription("send info1 message")
+	                        .storeDurably()
+	                        .build();
+	                
+	               
+
+	                // Create a new trigger with the cron expression
+	                Trigger trigger = TriggerBuilder.newTrigger()
+	                        .forJob(jobDetail)
+	                        .withIdentity(jobDetail.getKey().getName(), "message-triggers")
+	        				.withDescription("Send info1 message Trigger")
+	                       
+	                        .withSchedule(CronScheduleBuilder.cronSchedule(detail.getCronExpression()))
+	                        .build();
+	                
+	               
+
+	                // Schedule the job with the new trigger
+	                schedulerFactoryBean.getScheduler().scheduleJob(jobDetail, trigger);
+	                scheduleDetailsRepository.save(detail);
+	                
+	            } catch (Exception e) {
+	                // Handle scheduling errors
+	                e.printStackTrace();
+	            }
+	        } 
+	    
+	    
+	    
+	    public void sendInfo2(ScheduleDetails detail) {
+		      
+            try {
+	                // Validate the cron expression
+	                if (!CronExpression.isValidExpression(detail.getCronExpression())) {
+	                    throw new IllegalArgumentException("Invalid cron expression");
+	                }
+
+	                // Create a new job detail
+	                JobDetail jobDetail = JobBuilder.newJob(EmailJob2.class)
+	                		.withIdentity(UUID.randomUUID().toString(), "email-job2")
+	        				.withDescription("send info2 message job")
+	                        .storeDurably()
+	                        .build();
+	                
+	               
+
+	                // Create a new trigger with the cron expression
+	                Trigger trigger = TriggerBuilder.newTrigger()
+	                        .forJob(jobDetail)
+	                        .withIdentity(jobDetail.getKey().getName(), "message2-triggers")
+	        				.withDescription("Send info2 message Trigger")
+	                       
+	                        .withSchedule(CronScheduleBuilder.cronSchedule(detail.getCronExpression()))
+	                        .build();
+	                
+	               
+
+	                // Schedule the job with the new trigger
+	                schedulerFactoryBean.getScheduler().scheduleJob(jobDetail, trigger);
+	                scheduleDetailsRepository.save(detail);
+	            } catch (Exception e) {
+	                // Handle scheduling errors
+	                e.printStackTrace();
+	            }
+	        } 
+	    
+	    
+	    
+	    //pause a job by its key
+	    public void pauseJob(String jobName, String jobGroup) throws SchedulerException {
+	        JobKey jobKey = new JobKey(jobName, jobGroup);
+	        schedulerFactoryBean.getScheduler().pauseJob(jobKey);
+	        System.out.println("pause trigger time");
+	    } 
+	   
+	    
+	  //resumeJob
+	    public void resumeJob(String jobName, String jobGroup) throws SchedulerException {
+	        JobKey jobKey = new JobKey(jobName, jobGroup);
+	        schedulerFactoryBean.getScheduler().resumeJob(jobKey);
+	    }
+	    
+	    
+	    //updateTriggers time
+	    public void updateTriggerSchedule(String triggerName, String triggerGroup, String newCronExpression) throws SchedulerException {
+	        TriggerKey triggerKey = new TriggerKey(triggerName, triggerGroup);
+	        CronTrigger existingTrigger = (CronTrigger)schedulerFactoryBean.getScheduler() .getTrigger(triggerKey);
+
+	        if (existingTrigger != null) {
+	            CronTrigger newTrigger = TriggerBuilder.newTrigger()
+	                    .withIdentity(triggerKey)
+	                    .withSchedule(CronScheduleBuilder.cronSchedule(newCronExpression))
+	                    .build();
+
+	            schedulerFactoryBean.getScheduler().rescheduleJob(triggerKey, newTrigger);
+	        }
+	    }
+	    
+	    
+	    public ScheduleDetails saveCronDetail(ScheduleDetails details) {
+	    	          return scheduleDetailsRepository.save(details);
+	    }
+	    
+	    public List<ScheduleDetails> getAllCronData(){
+	    	return scheduleDetailsRepository.findAll();
+	    }
+          
+	    
+	    public ScheduleDetails updateCronExpression(ScheduleDetails details,  Long id) {
+	    	
+	    	 Optional<ScheduleDetails> optionalScheduleDetails = scheduleDetailsRepository.findById(id);
+	    	 ScheduleDetails scheduleDetails = optionalScheduleDetails.get();
+
+		        if (optionalScheduleDetails.isPresent()) {
+		        	
+//		        	details.setId(id);
+		            
+		           return scheduleDetailsRepository.save(details);
+		        }
+	    
+	    	 return  scheduleDetails;
+	    }
+	    
+	    public void scheduleJob(Long scheduleId) {
+	        Optional<ScheduleDetails> optionalScheduleDetails = scheduleDetailsRepository.findById(scheduleId);
+
+	        if (optionalScheduleDetails.isPresent()) {
+	            ScheduleDetails scheduleDetails = optionalScheduleDetails.get();
+
+	            try {
+	                // Validate the cron expression
+	                if (!CronExpression.isValidExpression(scheduleDetails.getCronExpression())) {
+	                    throw new IllegalArgumentException("Invalid cron expression");
+	                }
+
+	                // Create a new job detail
+	                JobDetail jobDetail = JobBuilder.newJob(EmailJob1.class)
+	                        .withIdentity("emailJob")
+	                        .storeDurably()
+	                        .build();
+
+	                // Create a new trigger with the cron expression
+	                Trigger trigger = TriggerBuilder.newTrigger()
+	                        .forJob(jobDetail)
+	                        .withIdentity("emailTrigger1")
+	                        .withSchedule(CronScheduleBuilder.cronSchedule(scheduleDetails.getCronExpression()))
+	                        .build();
+
+	                // Schedule the job with the new trigger
+	                schedulerFactoryBean.getScheduler().scheduleJob(jobDetail, trigger);
+	            } catch (Exception e) {
+	                // Handle scheduling errors
+	                e.printStackTrace();
+	            }
+	        } else {
+	            // Handle invalid scheduleId
+	        }
+	    }
+	    
+	    public void sendInfo(ScheduleDetails detail) {
+	      
+               try {
+	                // Validate the cron expression
+	                if (!CronExpression.isValidExpression(detail.getCronExpression())) {
+	                    throw new IllegalArgumentException("Invalid cron expression");
+	                }
+
+	                // Create a new job detail
+	                JobDetail jobDetail = JobBuilder.newJob(EmailJob1.class)
+	                		.withIdentity(UUID.randomUUID().toString(), "email-jobsb")
+	        				.withDescription("send Email1 job")
+	                        .storeDurably()
+	                        .build();
+	                
+	               
+
+	                // Create a new trigger with the cron expression
+	                Trigger trigger = TriggerBuilder.newTrigger()
+	                        .forJob(jobDetail)
+	                        .withIdentity(jobDetail.getKey().getName(), "email-triggersb")
+	        				.withDescription("Send message Trigger")
+	                       
+	                        .withSchedule(CronScheduleBuilder.cronSchedule(detail.getCronExpression()))
+	                        .build();
+	                
+	               
+
+	                // Schedule the job with the new trigger
+	                schedulerFactoryBean.getScheduler().scheduleJob(jobDetail, trigger);
+	            } catch (Exception e) {
+	                // Handle scheduling errors
+	                e.printStackTrace();
+	            }
+	        } 
+	    }
+	
+

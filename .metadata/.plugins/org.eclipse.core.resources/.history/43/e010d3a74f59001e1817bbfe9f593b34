@@ -1,0 +1,5 @@
+package com.socr.services;
+
+public class CategoryRepo {
+
+}

@@ -1,0 +1,5 @@
+package com.blog.swagger.congig;
+
+public class SwaggerConfig {
+
+}

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.m2e.core.pom.overview">
+	</section>
+	<section name="org.eclipse.m2e.core.pom.dependencies">
+	</section>
+	<section name="MavenProjectImportWizardPage">
+		<list key="rootDirectory">
+			<item value="D:\SOCR_SpringBootProject"/>
+			<item value="C:\Users\kirti.sharma\Downloads\quartz-master\quartz_practice"/>
+			<item value="C:\Users\kirti.sharma\Downloads\quartz-master\quartz-master"/>
+			<item value="D:\OneDrive - SmartDocs\Desktop\supplier folder\supplier-portal-backend"/>
+			<item value="C:\Users\kirti.sharma\Downloads\zookeeper-demo-master\zookeeper-demo-master"/>
+			<item value="C:\Users\kirti.sharma\Downloads\springcloud-service-discovery-master\springcloud-service-discovery-master"/>
+			<item value="C:\Users\kirti.sharma\Downloads\spring-microservice-zookeeper-example-master\spring-microservice-zookeeper-example-master\springbootcustomer"/>
+			<item value="C:\Users\kirti.sharma\Downloads\spring-microservice-zookeeper-example-master\spring-microservice-zookeeper-example-master"/>
+			<item value="C:\Users\kirti.sharma\Downloads\zookeeper\zookeeper"/>
+			<item value="C:\Users\kirti.sharma\Downloads\Microservices-kafka- project\order service"/>
+			<item value="C:\Users\kirti.sharma\Downloads\Microservices-kafka- project"/>
+			<item value="C:\Users\kirti.sharma\Downloads\KafkaApplication (1)\KafkaApplication"/>
+			<item value="D:\OneDrive - SmartDocs\Desktop\Software\KafkaApplication2377"/>
+			<item value="C:\Users\kirti.sharma\Downloads\spring-kafka-test-master\spring-kafka-test-master"/>
+			<item value="C:\Users\kirti.sharma\Downloads\spring-boot-kafka-master\spring-boot-kafka-master"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="MavenProjectWizardLocationPage">
+		<list key="location">
+			<item value="C:\Users\kirti.sharma\Downloads\onetomany\onetomany\src\main\java\com\onetomany\service\StudentService.java"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="MavenProjectWizardArchetypePage">
+		<item key="catalog" value="internal"/>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="Maven2ProjectWizardArchifactPage">
+		<list key="package">
+			<item value="org.springcloud1.web"/>
+			<item value="org.s"/>
+		</list>
+		<list key="groupId">
+			<item value="com.spring.zoo"/>
+		</list>
+		<list key="artifactId">
+			<item value="springcloud1-web"/>
+			<item value="s"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+		<list key="version">
+			<item value="0.0.1-SNAPSHOT"/>
+		</list>
+	</section>
+	<section name="MavenProjectWizardArtifactPage">
+		<list key="groupId">
+			<item value="com.spring.zoo"/>
+		</list>
+		<list key="name">
+		</list>
+		<list key="artifactId">
+			<item value="springcloud1-web"/>
+			<item value="ZookeeperConfig-1"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+		<list key="version">
+			<item value="0.0.1-SNAPSHOT"/>
+		</list>
+	</section>
+	<section name="MavenModuleWizardParentPage">
+		<list key="moduleName">
+			<item value="springcloud1-web"/>
+			<item value="s"/>
+			<item value="springcloud-web"/>
+			<item value="order-servi"/>
+			<item value="kafka-consumer-database"/>
+			<item value="kafka-producer-wikimedia"/>
+			<item value="Kafka-producer-wikimedia"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+</section>

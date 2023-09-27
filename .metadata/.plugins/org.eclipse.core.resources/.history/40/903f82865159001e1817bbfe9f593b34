@@ -1,0 +1,9 @@
+package com.socr.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.socr.user.model.Category;
+
+public interface categoryRepo extends JpaRepository<Category, Integer>{
+           
+}
